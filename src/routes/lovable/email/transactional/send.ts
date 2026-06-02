@@ -28,13 +28,7 @@ const sendEmailSchema = z.object({
   templateData: z.record(z.string(), z.any()).optional(),
 })
 
-// Configuration baked in at scaffold time
-const SITE_NAME = "rytterbakken-landing"
-// SENDER_DOMAIN is the verified sender subdomain FQDN (e.g., "notify.example.com").
-// It MUST match the subdomain delegated to Lovable's nameservers. NEVER use the root domain.
-const SENDER_DOMAIN = "notify.mindmatter.no"
-// FROM_DOMAIN is the domain shown in the From: header (e.g., "example.com").
-// Can be the root domain when display_from_root is enabled — this is cosmetic only.
+const SITE_NAME = "Rytterbakken"
 const FROM_DOMAIN = "notify.mindmatter.no"
 
 function redactEmail(email: string | null | undefined): string {
@@ -57,7 +51,7 @@ export const Route = createFileRoute("/lovable/email/transactional/send")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+        const supabaseUrl = process.env.SUPABASE_URL
         const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
         if (!supabaseUrl || !supabaseServiceKey) {
@@ -316,7 +310,6 @@ export const Route = createFileRoute("/lovable/email/transactional/send")({
             message_id: messageId,
             to: effectiveRecipient,
             from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
-            sender_domain: SENDER_DOMAIN,
             subject: resolvedSubject,
             html,
             text: plainText,

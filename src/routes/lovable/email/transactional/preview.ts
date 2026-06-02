@@ -18,7 +18,7 @@ export const Route = createFileRoute("/lovable/email/transactional/preview")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apiKey = process.env.LOVABLE_API_KEY
+        const apiKey = process.env.SUPABASE_SERVICE_ROLE_KEY
         if (!apiKey) {
           return Response.json(
             { error: 'Server configuration error' },
@@ -26,7 +26,6 @@ export const Route = createFileRoute("/lovable/email/transactional/preview")({
           )
         }
 
-        // Verify the caller is authorized with LOVABLE_API_KEY
         const authHeader = request.headers.get('Authorization')
         const token = authHeader?.replace(/^Bearer\s+/i, '')
         if (!token || !safeEqual(token, apiKey)) {

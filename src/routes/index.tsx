@@ -11,6 +11,7 @@ import { useReveal } from "@/hooks/use-reveal";
 
 import ogImg from "@/assets/og-rytterbakken.jpg";
 
+const siteUrl = import.meta.env.VITE_SITE_URL ?? "";
 const TITLE = "Rytterbakken — Regenerativt testlaboratorium i Elverum";
 const DESCRIPTION =
   "Rytterbakken er et fysisk testlaboratorium for regenerativ livs- og næringsutvikling i Elverum. Workshops, ​gårdsopphold og fordypningskurs der jord, helse og læring vokser sammen.";
@@ -44,18 +45,18 @@ export const Route = createFileRoute("/")({
           "@graph": [
             {
               "@type": "WebSite",
-              "@id": "https://rytterbakken-landing.lovable.app/#website",
-              url: "https://rytterbakken-landing.lovable.app/",
+              "@id": `${siteUrl}/#website`,
+              url: `${siteUrl}/`,
               name: "Rytterbakken",
               inLanguage: "nb-NO",
               description: DESCRIPTION,
-              publisher: { "@id": "https://rytterbakken-landing.lovable.app/#organization" },
+              publisher: { "@id": `${siteUrl}/#organization` },
             },
             {
               "@type": "Organization",
-              "@id": "https://rytterbakken-landing.lovable.app/#organization",
+              "@id": `${siteUrl}/#organization`,
               name: "Rytterbakken",
-              url: "https://rytterbakken-landing.lovable.app/",
+              url: `${siteUrl}/`,
               email: "post@mindmatter.no",
               description:
                 "Regenerativt testlaboratorium i Elverum for livs- og næringsutvikling, med workshops, gårdsopphold og fordypningskurs.",
@@ -76,7 +77,7 @@ export const Route = createFileRoute("/")({
             },
             {
               "@type": "SoftwareApplication",
-              "@id": "https://rytterbakken-landing.lovable.app/#eir",
+              "@id": `${siteUrl}/#eir`,
               name: "Eir",
               alternateName: "Eir — digital veileder",
               applicationCategory: "EducationalApplication",
@@ -84,8 +85,8 @@ export const Route = createFileRoute("/")({
               inLanguage: "nb-NO",
               description:
                 "Eir er en digital veileder for medlemmer av Rytterbakken. Hun kjenner medlemmets reise — kursene de har tatt, refleksjonene de har gjort, og hvor de er nå — og støtter videre læring og praksis innen regenerativ livsutvikling, pust og nervesystem-regulering.",
-              creator: { "@id": "https://rytterbakken-landing.lovable.app/#organization" },
-              provider: { "@id": "https://rytterbakken-landing.lovable.app/#organization" },
+              creator: { "@id": `${siteUrl}/#organization` },
+              provider: { "@id": `${siteUrl}/#organization` },
               audience: {
                 "@type": "Audience",
                 audienceType: "Medlemmer av Rytterbakken",

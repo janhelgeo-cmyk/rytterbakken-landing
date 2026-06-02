@@ -6,7 +6,6 @@ import { z } from 'zod'
 import { TEMPLATES } from '@/lib/email-templates/registry'
 
 const SITE_NAME = 'Mindmatter'
-const SENDER_DOMAIN = 'notify.mindmatter.no'
 const FROM_DOMAIN = 'notify.mindmatter.no'
 
 const bodySchema = z.object({
@@ -199,7 +198,6 @@ async function enqueueConfirmation(args: {
       message_id: messageId,
       to: email,
       from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
-      sender_domain: SENDER_DOMAIN,
       subject,
       html,
       text,
