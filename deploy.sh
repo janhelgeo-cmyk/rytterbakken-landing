@@ -10,11 +10,17 @@ PORT=3000
 REPO_DIR="/root/rytterbakken-landing"
 GITHUB_REPO="https://github.com/janhelgeo-cmyk/rytterbakken-landing.git"
 
-# Les VITE_-variabler fra lokal .env (de er publiserbare nøkler, ikke hemmeligheter)
+# Les variabler fra lokal .env
 if [ -f ".env" ]; then
-  VITE_SUPABASE_URL=$(grep -E "^VITE_SUPABASE_URL=" .env | cut -d'"' -f2)
-  VITE_SUPABASE_PUBLISHABLE_KEY=$(grep -E "^VITE_SUPABASE_PUBLISHABLE_KEY=" .env | cut -d'"' -f2)
-  VITE_SUPABASE_PROJECT_ID=$(grep -E "^VITE_SUPABASE_PROJECT_ID=" .env | cut -d'"' -f2)
+  _env() { grep -E "^$1=" .env | cut -d'"' -f2; }
+  VITE_SUPABASE_URL=$(_env VITE_SUPABASE_URL)
+  VITE_SUPABASE_PUBLISHABLE_KEY=$(_env VITE_SUPABASE_PUBLISHABLE_KEY)
+  VITE_SUPABASE_PROJECT_ID=$(_env VITE_SUPABASE_PROJECT_ID)
+  SUPABASE_URL=$(_env SUPABASE_URL)
+  SUPABASE_SERVICE_ROLE_KEY=$(_env SUPABASE_SERVICE_ROLE_KEY)
+  RESEND_API_KEY=$(_env RESEND_API_KEY)
+  ADMIN_PASSWORD=$(_env ADMIN_PASSWORD)
+  ADMIN_SESSION_SECRET=$(_env ADMIN_SESSION_SECRET)
 else
   echo "❌  Fant ingen .env — kjør fra prosjektmappen." && exit 1
 fi
@@ -29,11 +35,15 @@ git push
 ssh "$SERVER" bash -s -- \
   "$REPO_DIR" "$GITHUB_REPO" "$IMAGE" "$CONTAINER" "$DOMAIN" "$PORT" \
   "$VITE_SUPABASE_URL" "$VITE_SUPABASE_PUBLISHABLE_KEY" "$VITE_SUPABASE_PROJECT_ID" \
+  "$SUPABASE_URL" "$SUPABASE_SERVICE_ROLE_KEY" \
+  "$RESEND_API_KEY" "$ADMIN_PASSWORD" "$ADMIN_SESSION_SECRET" \
 <<'REMOTE'
   set -euo pipefail
   REPO_DIR="$1" GITHUB_REPO="$2" IMAGE="$3" CONTAINER="$4"
   DOMAIN="$5" PORT="$6"
   VITE_URL="$7" VITE_KEY="$8" VITE_PROJECT="$9"
+  SUPABASE_URL="${10}" SUPABASE_SERVICE_ROLE_KEY="${11}"
+  RESEND_API_KEY="${12}" ADMIN_PASSWORD="${13}" ADMIN_SESSION_SECRET="${14}"
 
   echo "⬇️   Henter kode..."
   if [ -d "$REPO_DIR/.git" ]; then
@@ -60,6 +70,11 @@ ssh "$SERVER" bash -s -- \
     -e PORT="$PORT" \
     -e NODE_ENV=production \
     -e VITE_SITE_URL="https://$DOMAIN" \
+    -e SUPABASE_URL="$SUPABASE_URL" \
+    -e SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY" \
+    -e RESEND_API_KEY="$RESEND_API_KEY" \
+    -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+    -e ADMIN_SESSION_SECRET="$ADMIN_SESSION_SECRET" \
     -l "traefik.enable=true" \
     -l "traefik.http.routers.${CONTAINER}-http.entryPoints=http" \
     -l "traefik.http.routers.${CONTAINER}-http.rule=Host(\`${DOMAIN}\`)" \
