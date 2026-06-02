@@ -22,7 +22,7 @@ export function getAdminSessionConfig() {
     cookie: {
       httpOnly: true,
       sameSite: "lax" as const,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV !== "development",
       path: "/",
     },
   };

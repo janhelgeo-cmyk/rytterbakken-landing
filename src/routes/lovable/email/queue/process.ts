@@ -302,7 +302,7 @@ export const Route = createFileRoute("/lovable/email/queue/process")({
               // message, so move straight to DLQ and stop processing the rest of the batch.
               if (isForbidden(error)) {
                 await moveToDlq(supabase, queue, msg, errorMsg.slice(0, 1000))
-                return Response.json({ processed: totalProcessed, stopped: 'forbidden' })
+                continue
               }
 
               // Log non-429 failures to track real retry attempts.

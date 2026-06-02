@@ -21,12 +21,11 @@ export const loginAdmin = createServerFn({ method: "POST" })
     if (!expected) {
       throw new Error("ADMIN_PASSWORD er ikke konfigurert på serveren.");
     }
-    // Constant-time-aktig sammenligning
     const a = Buffer.from(data.password);
     const b = Buffer.from(expected);
     const ok =
       a.length === b.length &&
-      a.every((byte, i) => byte === b[i]);
+      crypto.timingSafeEqual(a, b);
     if (!ok) {
       return { ok: false as const };
     }

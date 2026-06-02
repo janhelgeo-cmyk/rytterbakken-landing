@@ -290,9 +290,8 @@ export const Route = createFileRoute("/lovable/email/transactional/send")({
         }
 
         // 4. Render React Email template to HTML and plain text
-        const element = React.createElement(template.component, templateData)
-        const html = await render(element)
-        const plainText = await render(element, { plainText: true })
+        const html = await render(React.createElement(template.component, templateData))
+        const plainText = await render(React.createElement(template.component, templateData), { plainText: true })
 
         // Resolve subject — supports static string or dynamic function
         const resolvedSubject =

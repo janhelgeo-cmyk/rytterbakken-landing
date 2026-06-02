@@ -273,6 +273,7 @@ export function Waitlist() {
                   onClick={() => {
                     setStatus("idle");
                     setMessage("");
+                    setEmailReused(false);
                   }}
                   className="mt-5 inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-2.5 text-xs font-medium text-ink transition-colors hover:bg-muted"
                 >

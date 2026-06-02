@@ -10,8 +10,11 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import ogImage from "../assets/og-rytterbakken.jpg";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { checkRequiredEnv } from "../lib/env-check";
+
+const siteUrl = import.meta.env.VITE_SITE_URL ?? "";
 
 function MissingEnvScreen({ missing }: { missing: string[] }) {
   return (
@@ -117,8 +120,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Rytterbakken is a physical-digital test lab for regenerative living and nutrition development." },
       { property: "og:description", content: "Rytterbakken is a physical-digital test lab for regenerative living and nutrition development." },
       { name: "twitter:description", content: "Rytterbakken is a physical-digital test lab for regenerative living and nutrition development." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/96839503-20a8-43db-b0f2-e505cc157c23/id-preview-171145cb--00161adf-5cd4-4281-b506-0de5d4cf078a.lovable.app-1780311268675.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/96839503-20a8-43db-b0f2-e505cc157c23/id-preview-171145cb--00161adf-5cd4-4281-b506-0de5d4cf078a.lovable.app-1780311268675.png" },
+      { property: "og:image", content: `${siteUrl}${ogImage}` },
+      { name: "twitter:image", content: `${siteUrl}${ogImage}` },
     ],
     links: [
       {
@@ -133,7 +136,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Rytterbakken",
-          url: "https://rytterbakken-landing.lovable.app",
+          url: siteUrl || "https://rytterbakken.no",
           description:
             "Fysisk testlaboratorium for regenerativ livs- og næringsutvikling i Elverum. Tilbyr workshops, gårdsopphold og fordypningskurs der jord, helse og læring vokser sammen, støttet av Eir — en digital veileder for medlemmer.",
           email: "post@mindmatter.no",

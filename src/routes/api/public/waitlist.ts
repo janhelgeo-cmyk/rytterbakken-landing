@@ -27,7 +27,7 @@ export const Route = createFileRoute('/api/public/waitlist')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+        const supabaseUrl = process.env.SUPABASE_URL
         const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
         if (!supabaseUrl || !supabaseServiceKey) {
           return Response.json({ error: 'Server configuration error' }, { status: 500 })
@@ -175,12 +175,9 @@ async function enqueueConfirmation(args: {
     return { reused: true, sentAt: null, source: null }
   }
 
-  const element = React.createElement(template.component, {
-    name: name ?? undefined,
-    reason: reason ?? undefined,
-  })
-  const html = await render(element)
-  const text = await render(element, { plainText: true })
+  const templateProps = { name: name ?? undefined, reason: reason ?? undefined }
+  const html = await render(React.createElement(template.component, templateProps))
+  const text = await render(React.createElement(template.component, templateProps), { plainText: true })
   const subject =
     typeof template.subject === 'function'
       ? template.subject({ name, reason })
