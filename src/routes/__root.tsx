@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import ogImage from "../assets/og-rytterbakken.jpg";
+import faviconUrl from "../../public/favicon.png?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { checkRequiredEnv } from "../lib/env-check";
 
@@ -124,10 +125,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: `${siteUrl}${ogImage}` },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: faviconUrl },
+      { rel: "apple-touch-icon", href: faviconUrl },
     ],
     scripts: [
       {
