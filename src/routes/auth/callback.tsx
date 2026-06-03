@@ -9,16 +9,16 @@ export const Route = createFileRoute("/auth/callback")({
 function AuthCallback() {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) {
+      if (event === "PASSWORD_RECOVERY") {
+        // Redirect to password reset page — session is set, user can update password
+        window.location.replace("/sett-passord");
+      } else if (event === "SIGNED_IN" && session) {
         window.location.replace("/min-side");
       }
     });
 
-    // Also check immediately (handles hash tokens on page load)
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        window.location.replace("/min-side");
-      }
+      if (session) window.location.replace("/min-side");
     });
   }, []);
 

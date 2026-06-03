@@ -9,7 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettPassordRouteImport } from './routes/sett-passord'
+import { Route as RegistrerRouteImport } from './routes/registrer'
 import { Route as LoggInnRouteImport } from './routes/logg-inn'
+import { Route as GlemtPassordRouteImport } from './routes/glemt-passord'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MinSideIndexRouteImport } from './routes/min-side/index'
@@ -23,15 +26,32 @@ import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicWaitlistRouteImport } from './routes/api/public/waitlist'
 import { Route as ApiMemberEirRouteImport } from './routes/api/member/eir'
+import { Route as ApiAuthSendResetLinkRouteImport } from './routes/api/auth/send-reset-link'
 import { Route as ApiAuthSendMagicLinkRouteImport } from './routes/api/auth/send-magic-link'
+import { Route as ApiAuthRegisterRouteImport } from './routes/api/auth/register'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 import { Route as ApiPublicWaitlistVerifyRouteImport } from './routes/api/public/waitlist/verify'
 
+const SettPassordRoute = SettPassordRouteImport.update({
+  id: '/sett-passord',
+  path: '/sett-passord',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistrerRoute = RegistrerRouteImport.update({
+  id: '/registrer',
+  path: '/registrer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoggInnRoute = LoggInnRouteImport.update({
   id: '/logg-inn',
   path: '/logg-inn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlemtPassordRoute = GlemtPassordRouteImport.update({
+  id: '/glemt-passord',
+  path: '/glemt-passord',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -99,9 +119,19 @@ const ApiMemberEirRoute = ApiMemberEirRouteImport.update({
   path: '/api/member/eir',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSendResetLinkRoute = ApiAuthSendResetLinkRouteImport.update({
+  id: '/api/auth/send-reset-link',
+  path: '/api/auth/send-reset-link',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSendMagicLinkRoute = ApiAuthSendMagicLinkRouteImport.update({
   id: '/api/auth/send-magic-link',
   path: '/api/auth/send-magic-link',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthRegisterRoute = ApiAuthRegisterRouteImport.update({
+  id: '/api/auth/register',
+  path: '/api/auth/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LovableEmailTransactionalSendRoute =
@@ -131,7 +161,10 @@ const ApiPublicWaitlistVerifyRoute = ApiPublicWaitlistVerifyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/glemt-passord': typeof GlemtPassordRoute
   '/logg-inn': typeof LoggInnRoute
+  '/registrer': typeof RegistrerRoute
+  '/sett-passord': typeof SettPassordRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
@@ -140,7 +173,9 @@ export interface FileRoutesByFullPath {
   '/min-side/eir': typeof MinSideEirRoute
   '/min-side/profil': typeof MinSideProfilRoute
   '/min-side/': typeof MinSideIndexRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
+  '/api/auth/send-reset-link': typeof ApiAuthSendResetLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -152,7 +187,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/glemt-passord': typeof GlemtPassordRoute
   '/logg-inn': typeof LoggInnRoute
+  '/registrer': typeof RegistrerRoute
+  '/sett-passord': typeof SettPassordRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
@@ -160,7 +198,9 @@ export interface FileRoutesByTo {
   '/min-side/aktiviteter': typeof MinSideAktiviteterRoute
   '/min-side/eir': typeof MinSideEirRoute
   '/min-side/profil': typeof MinSideProfilRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
+  '/api/auth/send-reset-link': typeof ApiAuthSendResetLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -173,7 +213,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/glemt-passord': typeof GlemtPassordRoute
   '/logg-inn': typeof LoggInnRoute
+  '/registrer': typeof RegistrerRoute
+  '/sett-passord': typeof SettPassordRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
@@ -182,7 +225,9 @@ export interface FileRoutesById {
   '/min-side/eir': typeof MinSideEirRoute
   '/min-side/profil': typeof MinSideProfilRoute
   '/min-side/': typeof MinSideIndexRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
+  '/api/auth/send-reset-link': typeof ApiAuthSendResetLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -196,7 +241,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/glemt-passord'
     | '/logg-inn'
+    | '/registrer'
+    | '/sett-passord'
     | '/auth/callback'
     | '/email/unsubscribe'
     | '/fagfelt/$slug'
@@ -205,7 +253,9 @@ export interface FileRouteTypes {
     | '/min-side/eir'
     | '/min-side/profil'
     | '/min-side/'
+    | '/api/auth/register'
     | '/api/auth/send-magic-link'
+    | '/api/auth/send-reset-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
@@ -217,7 +267,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/glemt-passord'
     | '/logg-inn'
+    | '/registrer'
+    | '/sett-passord'
     | '/auth/callback'
     | '/email/unsubscribe'
     | '/fagfelt/$slug'
@@ -225,7 +278,9 @@ export interface FileRouteTypes {
     | '/min-side/aktiviteter'
     | '/min-side/eir'
     | '/min-side/profil'
+    | '/api/auth/register'
     | '/api/auth/send-magic-link'
+    | '/api/auth/send-reset-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
@@ -237,7 +292,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/glemt-passord'
     | '/logg-inn'
+    | '/registrer'
+    | '/sett-passord'
     | '/auth/callback'
     | '/email/unsubscribe'
     | '/fagfelt/$slug'
@@ -246,7 +304,9 @@ export interface FileRouteTypes {
     | '/min-side/eir'
     | '/min-side/profil'
     | '/min-side/'
+    | '/api/auth/register'
     | '/api/auth/send-magic-link'
+    | '/api/auth/send-reset-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
@@ -259,7 +319,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  GlemtPassordRoute: typeof GlemtPassordRoute
   LoggInnRoute: typeof LoggInnRoute
+  RegistrerRoute: typeof RegistrerRoute
+  SettPassordRoute: typeof SettPassordRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   FagfeltSlugRoute: typeof FagfeltSlugRoute
@@ -268,7 +331,9 @@ export interface RootRouteChildren {
   MinSideEirRoute: typeof MinSideEirRoute
   MinSideProfilRoute: typeof MinSideProfilRoute
   MinSideIndexRoute: typeof MinSideIndexRoute
+  ApiAuthRegisterRoute: typeof ApiAuthRegisterRoute
   ApiAuthSendMagicLinkRoute: typeof ApiAuthSendMagicLinkRoute
+  ApiAuthSendResetLinkRoute: typeof ApiAuthSendResetLinkRoute
   ApiMemberEirRoute: typeof ApiMemberEirRoute
   ApiPublicWaitlistRoute: typeof ApiPublicWaitlistRouteWithChildren
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
@@ -279,11 +344,32 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sett-passord': {
+      id: '/sett-passord'
+      path: '/sett-passord'
+      fullPath: '/sett-passord'
+      preLoaderRoute: typeof SettPassordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registrer': {
+      id: '/registrer'
+      path: '/registrer'
+      fullPath: '/registrer'
+      preLoaderRoute: typeof RegistrerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/logg-inn': {
       id: '/logg-inn'
       path: '/logg-inn'
       fullPath: '/logg-inn'
       preLoaderRoute: typeof LoggInnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glemt-passord': {
+      id: '/glemt-passord'
+      path: '/glemt-passord'
+      fullPath: '/glemt-passord'
+      preLoaderRoute: typeof GlemtPassordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -377,11 +463,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMemberEirRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/send-reset-link': {
+      id: '/api/auth/send-reset-link'
+      path: '/api/auth/send-reset-link'
+      fullPath: '/api/auth/send-reset-link'
+      preLoaderRoute: typeof ApiAuthSendResetLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/send-magic-link': {
       id: '/api/auth/send-magic-link'
       path: '/api/auth/send-magic-link'
       fullPath: '/api/auth/send-magic-link'
       preLoaderRoute: typeof ApiAuthSendMagicLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/register': {
+      id: '/api/auth/register'
+      path: '/api/auth/register'
+      fullPath: '/api/auth/register'
+      preLoaderRoute: typeof ApiAuthRegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/transactional/send': {
@@ -429,7 +529,10 @@ const ApiPublicWaitlistRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  GlemtPassordRoute: GlemtPassordRoute,
   LoggInnRoute: LoggInnRoute,
+  RegistrerRoute: RegistrerRoute,
+  SettPassordRoute: SettPassordRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   FagfeltSlugRoute: FagfeltSlugRoute,
@@ -438,7 +541,9 @@ const rootRouteChildren: RootRouteChildren = {
   MinSideEirRoute: MinSideEirRoute,
   MinSideProfilRoute: MinSideProfilRoute,
   MinSideIndexRoute: MinSideIndexRoute,
+  ApiAuthRegisterRoute: ApiAuthRegisterRoute,
   ApiAuthSendMagicLinkRoute: ApiAuthSendMagicLinkRoute,
+  ApiAuthSendResetLinkRoute: ApiAuthSendResetLinkRoute,
   ApiMemberEirRoute: ApiMemberEirRoute,
   ApiPublicWaitlistRoute: ApiPublicWaitlistRouteWithChildren,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
