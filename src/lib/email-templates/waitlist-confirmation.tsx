@@ -4,6 +4,7 @@ import {
   Head,
   Hr,
   Html,
+  Link,
   Preview,
   Section,
   Text,
@@ -48,8 +49,12 @@ const WaitlistConfirmationEmail = ({
         ) : null}
 
         <Text style={text}>
-          I mellomtiden: nettsiden vår har mer om hva vi jobber med og hvem vi
-          er. Har du spørsmål, svar gjerne på denne e-posten.
+          I mellomtiden:{' '}
+          <Link href="https://rytterbakken.mindmatter.no" style={link}>
+            rytterbakken.mindmatter.no
+          </Link>{' '}
+          har mer om hva vi jobber med og hvem vi er. Har du spørsmål, svar
+          gjerne på denne e-posten.
         </Text>
 
         <Hr style={divider} />
@@ -155,4 +160,9 @@ const signoff = {
 const location = {
   fontSize: '13px',
   color: '#5C5249',
+}
+
+const link = {
+  color: '#B5663D',
+  textDecoration: 'underline',
 }
