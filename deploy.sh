@@ -21,6 +21,7 @@ if [ -f ".env" ]; then
   RESEND_API_KEY=$(_env RESEND_API_KEY)
   ADMIN_PASSWORD=$(_env ADMIN_PASSWORD)
   ADMIN_SESSION_SECRET=$(_env ADMIN_SESSION_SECRET)
+  OPENROUTER_API_KEY=$(_env OPENROUTER_API_KEY)
 else
   echo "❌  Fant ingen .env — kjør fra prosjektmappen." && exit 1
 fi
@@ -37,6 +38,7 @@ ssh "$SERVER" bash -s -- \
   "$VITE_SUPABASE_URL" "$VITE_SUPABASE_PUBLISHABLE_KEY" "$VITE_SUPABASE_PROJECT_ID" \
   "$SUPABASE_URL" "$SUPABASE_SERVICE_ROLE_KEY" \
   "$RESEND_API_KEY" "$ADMIN_PASSWORD" "$ADMIN_SESSION_SECRET" \
+  "$OPENROUTER_API_KEY" \
 <<'REMOTE'
   set -euo pipefail
   REPO_DIR="$1" GITHUB_REPO="$2" IMAGE="$3" CONTAINER="$4"
@@ -44,6 +46,7 @@ ssh "$SERVER" bash -s -- \
   VITE_URL="$7" VITE_KEY="$8" VITE_PROJECT="$9"
   SUPABASE_URL="${10}" SUPABASE_SERVICE_ROLE_KEY="${11}"
   RESEND_API_KEY="${12}" ADMIN_PASSWORD="${13}" ADMIN_SESSION_SECRET="${14}"
+  OPENROUTER_API_KEY="${15}"
 
   echo "⬇️   Henter kode..."
   if [ -d "$REPO_DIR/.git" ]; then
@@ -75,6 +78,7 @@ ssh "$SERVER" bash -s -- \
     -e RESEND_API_KEY="$RESEND_API_KEY" \
     -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
     -e ADMIN_SESSION_SECRET="$ADMIN_SESSION_SECRET" \
+    -e OPENROUTER_API_KEY="$OPENROUTER_API_KEY" \
     -l "traefik.enable=true" \
     -l "traefik.http.routers.${CONTAINER}-http.entryPoints=http" \
     -l "traefik.http.routers.${CONTAINER}-http.rule=Host(\`${DOMAIN}\`)" \
