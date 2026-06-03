@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="no" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Logg inn på Rytterbakken</title>
+</head>
+<body style="margin:0;padding:0;background-color:#F4EDE2;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#F4EDE2;padding:48px 0;">
+    <tr>
+      <td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;padding:0 24px;">
+
+          <!-- Wordmark -->
+          <tr>
+            <td style="padding-bottom:24px;">
+              <p style="margin:0;font-size:22px;font-weight:500;color:#2A2520;letter-spacing:-0.01em;">Rytterbakken</p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="border-top:1px solid #D9C9AE;padding-bottom:28px;"></td>
+          </tr>
+
+          <!-- Heading -->
+          <tr>
+            <td style="padding-bottom:20px;">
+              <p style="margin:0;font-size:28px;font-weight:400;color:#2A2520;line-height:1.2;font-style:italic;">
+                Innloggingslenke
+              </p>
+            </td>
+          </tr>
+
+          <!-- Body text -->
+          <tr>
+            <td style="padding-bottom:28px;">
+              <p style="margin:0;font-size:16px;color:#5C5249;line-height:1.65;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+                Klikk knappen under for å logge inn på Min side. Lenken er gyldig i 24 timer og kan kun brukes én gang.
+              </p>
+            </td>
+          </tr>
+
+          <!-- CTA Button -->
+          <tr>
+            <td style="padding-bottom:28px;">
+              <a href="{{ .ConfirmationURL }}"
+                 style="display:inline-block;background-color:#B5663D;color:#F4EDE2;text-decoration:none;border-radius:100px;padding:14px 28px;font-size:15px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:0.01em;">
+                Logg inn på Min side →
+              </a>
+            </td>
+          </tr>
+
+          <!-- Small print -->
+          <tr>
+            <td style="padding-bottom:28px;">
+              <p style="margin:0;font-size:13px;color:#5C5249;line-height:1.6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+                Hvis knappen ikke fungerer, kopier denne lenken og lim den inn i nettleseren:
+                <br />
+                <span style="color:#B5663D;word-break:break-all;">{{ .ConfirmationURL }}</span>
+              </p>
+              <p style="margin:12px 0 0;font-size:13px;color:#5C5249;line-height:1.6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+                Hvis du ikke ba om denne lenken, kan du se bort fra e-posten.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="border-top:1px solid #D9C9AE;padding-bottom:24px;"></td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td>
+              <p style="margin:0;font-size:15px;color:#2A2520;line-height:1.6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+                Rytterbakken
+              </p>
+              <p style="margin:4px 0 0;font-size:13px;color:#5C5249;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+                Elverum, Norge · post@mindmatter.no
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
