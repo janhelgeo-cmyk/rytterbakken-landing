@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { TEMPLATES } from '@/lib/email-templates/registry'
 
 const SITE_NAME = 'Mindmatter'
-const FROM_DOMAIN = 'notify.mindmatter.no'
+const FROM_DOMAIN = 'mindmatter.no'
 
 const bodySchema = z.object({
   email: z.string().trim().email().max(320),

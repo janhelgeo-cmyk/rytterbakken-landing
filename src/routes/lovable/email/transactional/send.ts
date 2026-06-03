@@ -29,7 +29,7 @@ const sendEmailSchema = z.object({
 })
 
 const SITE_NAME = "Rytterbakken"
-const FROM_DOMAIN = "notify.mindmatter.no"
+const FROM_DOMAIN = "mindmatter.no"
 
 function redactEmail(email: string | null | undefined): string {
   if (!email) return '***'
