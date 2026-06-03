@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { createClient } from '@supabase/supabase-js'
+import { Resend } from 'resend'
 import { render } from '@react-email/components'
 import * as React from 'react'
 import { z } from 'zod'
@@ -7,6 +8,7 @@ import { TEMPLATES } from '@/lib/email-templates/registry'
 
 const SITE_NAME = 'Rytterbakken'
 const FROM_DOMAIN = 'mindmatter.no'
+const SITE_URL = process.env.VITE_SITE_URL || 'https://rytterbakken.mindmatter.no'
 
 const bodySchema = z.object({
   email: z.string().trim().email().max(320),
@@ -28,7 +30,8 @@ export const Route = createFileRoute('/api/public/waitlist')({
       POST: async ({ request }) => {
         const supabaseUrl = process.env.SUPABASE_URL
         const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-        if (!supabaseUrl || !supabaseServiceKey) {
+        const resendApiKey = process.env.RESEND_API_KEY
+        if (!supabaseUrl || !supabaseServiceKey || !resendApiKey) {
           return Response.json({ error: 'Server configuration error' }, { status: 500 })
         }
 
@@ -46,180 +49,87 @@ export const Route = createFileRoute('/api/public/waitlist')({
         const email = parsed.data.email.toLowerCase()
         const name = parsed.data.name?.trim() || null
         const reason = parsed.data.reason?.trim() || null
-
         const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-        const { error: insertError } = await supabase
+        // Check suppression list
+        const { data: suppressed } = await supabase
+          .from('suppressed_emails')
+          .select('id')
+          .eq('email', email)
+          .maybeSingle()
+        if (suppressed) {
+          return Response.json({ success: true, status: 'suppressed' })
+        }
+
+        // Already confirmed on waitlist?
+        const { data: existing } = await supabase
           .from('waitlist')
-          .insert({ email, name, reason, source: 'landing' })
-
-        let alreadyOnList = false
-        if (insertError) {
-          if ((insertError as any).code === '23505') {
-            alreadyOnList = true
-          } else {
-            console.error('Waitlist insert failed', insertError)
-            return Response.json({ error: 'Could not join waitlist' }, { status: 500 })
-          }
+          .select('id')
+          .eq('email', email)
+          .maybeSingle()
+        if (existing) {
+          return Response.json({ success: true, status: 'already_confirmed' })
         }
 
-        // Send confirmation email. Idempotent: if a non-failed send already
-        // exists for this recipient + template, reuse that result instead
-        // of enqueueing another email.
-        let emailSent = true
-        let emailReused = false
-        let emailSentAt: string | null = null
-        let emailSource: string | null = null
+        // Upsert into pending (replace existing pending entry for same email)
+        const token = generateToken()
+        const { error: pendingError } = await supabase
+          .from('waitlist_pending')
+          .upsert(
+            {
+              email,
+              name,
+              reason,
+              source: 'landing',
+              token,
+              expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+            },
+            { onConflict: 'email' }
+          )
+        if (pendingError) {
+          console.error('Failed to insert pending waitlist entry', pendingError)
+          return Response.json({ error: 'Could not process signup' }, { status: 500 })
+        }
+
+        // Re-read to get the actual stored token (upsert may have kept existing)
+        const { data: pendingRow } = await supabase
+          .from('waitlist_pending')
+          .select('token')
+          .eq('email', email)
+          .maybeSingle()
+
+        const verifyToken = pendingRow?.token ?? token
+        const verifyUrl = `${SITE_URL}/api/public/waitlist/verify?token=${verifyToken}`
+
+        // Send verification email directly via Resend (no queue — needs to go out immediately)
+        const template = TEMPLATES['waitlist-verify']
+        if (!template) {
+          return Response.json({ error: 'Template not found' }, { status: 500 })
+        }
+
+        const templateProps = { name: name ?? undefined, verifyUrl }
+        const html = await render(React.createElement(template.component, templateProps))
+        const text = await render(React.createElement(template.component, templateProps), { plainText: true })
+        const subject = typeof template.subject === 'function'
+          ? template.subject(templateProps)
+          : template.subject
+
         try {
-          const result = await enqueueConfirmation({ supabase, email, name, reason })
-          emailReused = result.reused
-          emailSentAt = result.sentAt
-          emailSource = result.source
+          const resend = new Resend(resendApiKey)
+          await resend.emails.send({
+            from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+            to: [email],
+            subject,
+            html,
+            text: text ?? undefined,
+          })
         } catch (err) {
-          console.error('Failed to enqueue waitlist confirmation', err)
-          emailSent = false
+          console.error('Failed to send verification email', err)
+          return Response.json({ error: 'Could not send verification email' }, { status: 500 })
         }
 
-        return Response.json({
-          success: true,
-          alreadyOnList,
-          emailSent,
-          emailReused,
-          emailSentAt,
-          emailSource,
-        })
-
-
-
-
+        return Response.json({ success: true, status: 'verification_sent' })
       },
     },
   },
 })
-
-const WAITLIST_SOURCE = 'landing'
-
-async function enqueueConfirmation(args: {
-  supabase: any
-  email: string
-  name: string | null
-  reason: string | null
-}): Promise<{ reused: boolean; sentAt: string | null; source: string | null }> {
-
-  const { supabase, email, name, reason } = args
-  const templateName = 'waitlist-confirmation'
-  const template = TEMPLATES[templateName]
-  if (!template) throw new Error('Template not registered')
-
-  // Idempotency: if we've already logged a non-failed send for this
-  // recipient + template, reuse the prior result.
-  const { data: priorSend } = await supabase
-    .from('email_send_log')
-    .select('id, status, created_at, metadata')
-    .eq('recipient_email', email)
-    .eq('template_name', templateName)
-    .neq('status', 'failed')
-    .order('created_at', { ascending: true })
-    .limit(1)
-    .maybeSingle()
-  if (priorSend) {
-    const priorSource =
-      (priorSend.metadata && typeof priorSend.metadata === 'object'
-        ? (priorSend.metadata as Record<string, unknown>).source
-        : null) ?? null
-    return {
-      reused: true,
-      sentAt: priorSend.created_at ?? null,
-      source: typeof priorSource === 'string' ? priorSource : null,
-    }
-  }
-
-  // Suppression check
-  const { data: suppressed } = await supabase
-    .from('suppressed_emails')
-    .select('id')
-    .eq('email', email)
-    .maybeSingle()
-  if (suppressed) return { reused: true, sentAt: null, source: null }
-
-
-
-
-  // Unsubscribe token (one per email)
-  let unsubscribeToken: string
-  const { data: existing } = await supabase
-    .from('email_unsubscribe_tokens')
-    .select('token, used_at')
-    .eq('email', email)
-    .maybeSingle()
-
-  if (existing && !existing.used_at) {
-    unsubscribeToken = existing.token as string
-  } else if (!existing) {
-    unsubscribeToken = generateToken()
-    await supabase
-      .from('email_unsubscribe_tokens')
-      .upsert(
-        { token: unsubscribeToken, email },
-        { onConflict: 'email', ignoreDuplicates: true },
-      )
-    const { data: stored } = await supabase
-      .from('email_unsubscribe_tokens')
-      .select('token')
-      .eq('email', email)
-      .maybeSingle()
-    if (stored?.token) unsubscribeToken = stored.token as string
-  } else {
-    // Token used → user previously unsubscribed; skip send
-    return { reused: true, sentAt: null, source: null }
-  }
-
-  const templateProps = { name: name ?? undefined, reason: reason ?? undefined }
-  const html = await render(React.createElement(template.component, templateProps))
-  const text = await render(React.createElement(template.component, templateProps), { plainText: true })
-  const subject =
-    typeof template.subject === 'function'
-      ? template.subject({ name, reason })
-      : template.subject
-
-  const messageId = crypto.randomUUID()
-  await supabase.from('email_send_log').insert({
-    message_id: messageId,
-    template_name: templateName,
-    recipient_email: email,
-    status: 'pending',
-    metadata: { source: WAITLIST_SOURCE },
-  })
-
-
-  const { error: enqueueError } = await supabase.rpc('enqueue_email', {
-    queue_name: 'transactional_emails',
-    payload: {
-      message_id: messageId,
-      to: email,
-      from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
-      subject,
-      html,
-      text,
-      purpose: 'transactional',
-      label: templateName,
-      idempotency_key: `waitlist-${email}`,
-      unsubscribe_token: unsubscribeToken!,
-      queued_at: new Date().toISOString(),
-    },
-  })
-
-  if (enqueueError) {
-    await supabase.from('email_send_log').insert({
-      message_id: messageId,
-      template_name: templateName,
-      recipient_email: email,
-      status: 'failed',
-      error_message: 'Failed to enqueue email',
-    })
-    throw enqueueError
-  }
-
-  return { reused: false, sentAt: null, source: WAITLIST_SOURCE }
-}
-

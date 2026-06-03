@@ -93,6 +93,24 @@ export function Waitlist() {
   const [emailSentAt, setEmailSentAt] = useState<string | null>(null);
   const [emailSource, setEmailSource] = useState<string | null>(null);
 
+  // Show confirmed state if user arrives from email verification link
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const verified = params.get("verified");
+    if (verified === "true") {
+      setStatus("success");
+      setMessage("E-postadressen er bekreftet. Du er på listen.");
+      window.history.replaceState({}, "", window.location.pathname + "#venteliste");
+    } else if (verified === "expired") {
+      setStatus("error");
+      setMessage("Lenken har gått ut (gyldig 24 timer). Meld deg på igjen så sender vi en ny.");
+    } else if (verified === "invalid") {
+      setStatus("error");
+      setMessage("Ugyldig bekreftelseslenke.");
+    }
+  }, []);
+
 
 
   async function submit() {
@@ -126,29 +144,20 @@ export function Waitlist() {
         return;
       }
 
-      if (data?.emailSent === false) {
-        // Saved to waitlist, but confirmation email failed.
-        setStatus("email_failed");
-        setMessage(
-          "Du står på ventelisten, men vi klarte ikke å sende bekreftelsen til e-posten din.",
-        );
+      if (data?.status === "already_confirmed") {
+        setStatus("success");
+        setMessage("Du er allerede bekreftet på listen.");
         return;
       }
 
-      const reused = Boolean(data?.emailReused);
-      setEmailReused(reused);
-      setEmailSentAt(typeof data?.emailSentAt === "string" ? data.emailSentAt : null);
-      setEmailSource(typeof data?.emailSource === "string" ? data.emailSource : null);
-      setStatus("success");
-
-
-      setMessage(
-        reused
-          ? "Vi har allerede sendt deg en bekreftelse tidligere — sjekk innboksen din. Vi sender ikke en ny e-post."
-          : data?.alreadyOnList
-            ? "Du står allerede på listen — takk! Vi har sendt deg en ny bekreftelse på e-post."
-            : "Takk! Vi har sendt deg en bekreftelse på e-post.",
-      );
+      if (data?.status === "verification_sent") {
+        setStatus("success");
+        setMessage("Sjekk innboksen — vi har sendt deg en bekreftelseslenke. Klikk på den for å fullføre påmeldingen.");
+        setEmail("");
+        setName("");
+        setReason("");
+        return;
+      }
       setEmail("");
       setName("");
       setReason("");

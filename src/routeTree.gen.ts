@@ -18,6 +18,7 @@ import { Route as ApiPublicWaitlistRouteImport } from './routes/api/public/waitl
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
+import { Route as ApiPublicWaitlistVerifyRouteImport } from './routes/api/public/waitlist/verify'
 
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
@@ -67,14 +68,20 @@ const LovableEmailQueueProcessRoute =
     path: '/lovable/email/queue/process',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicWaitlistVerifyRoute = ApiPublicWaitlistVerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => ApiPublicWaitlistRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
-  '/api/public/waitlist': typeof ApiPublicWaitlistRoute
+  '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/waitlist/verify': typeof ApiPublicWaitlistVerifyRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
@@ -84,8 +91,9 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
-  '/api/public/waitlist': typeof ApiPublicWaitlistRoute
+  '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/waitlist/verify': typeof ApiPublicWaitlistVerifyRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
@@ -96,8 +104,9 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
-  '/api/public/waitlist': typeof ApiPublicWaitlistRoute
+  '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/api/public/waitlist/verify': typeof ApiPublicWaitlistVerifyRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
   '/lovable/email/transactional/send': typeof LovableEmailTransactionalSendRoute
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/fagfelt/$slug'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
+    | '/api/public/waitlist/verify'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/fagfelt/$slug'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
+    | '/api/public/waitlist/verify'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/fagfelt/$slug'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
+    | '/api/public/waitlist/verify'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
     | '/lovable/email/transactional/send'
@@ -143,7 +155,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   FagfeltSlugRoute: typeof FagfeltSlugRoute
-  ApiPublicWaitlistRoute: typeof ApiPublicWaitlistRoute
+  ApiPublicWaitlistRoute: typeof ApiPublicWaitlistRouteWithChildren
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -215,15 +227,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailQueueProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/waitlist/verify': {
+      id: '/api/public/waitlist/verify'
+      path: '/verify'
+      fullPath: '/api/public/waitlist/verify'
+      preLoaderRoute: typeof ApiPublicWaitlistVerifyRouteImport
+      parentRoute: typeof ApiPublicWaitlistRoute
+    }
   }
 }
+
+interface ApiPublicWaitlistRouteChildren {
+  ApiPublicWaitlistVerifyRoute: typeof ApiPublicWaitlistVerifyRoute
+}
+
+const ApiPublicWaitlistRouteChildren: ApiPublicWaitlistRouteChildren = {
+  ApiPublicWaitlistVerifyRoute: ApiPublicWaitlistVerifyRoute,
+}
+
+const ApiPublicWaitlistRouteWithChildren =
+  ApiPublicWaitlistRoute._addFileChildren(ApiPublicWaitlistRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   FagfeltSlugRoute: FagfeltSlugRoute,
-  ApiPublicWaitlistRoute: ApiPublicWaitlistRoute,
+  ApiPublicWaitlistRoute: ApiPublicWaitlistRouteWithChildren,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
