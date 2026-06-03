@@ -1,14 +1,14 @@
 const specialties = [
-  "Ketaminbehandling",
-  "Cannabismedisin",
-  "Funksjonell medisin",
-  "5 Element Akupunktur",
-  "Polyvagalteori",
-  "Internal Family Systems",
-  "Somatic Experiencing",
-  "Pustearbeid",
-  "Dyreterapi",
-  "Trening som medisin",
+  { label: "Ketaminbehandling",       slug: "ketaminbehandling" },
+  { label: "Cannabismedisin",         slug: "cannabismedisin" },
+  { label: "Funksjonell medisin",     slug: "funksjonell-medisin" },
+  { label: "5 Element Akupunktur",    slug: "5-element-akupunktur" },
+  { label: "Polyvagalteori",          slug: "polyvagalteori" },
+  { label: "Internal Family Systems", slug: "ifs" },
+  { label: "Somatic Experiencing",    slug: "somatic-experiencing" },
+  { label: "Pustearbeid",             slug: "pustearbeid" },
+  { label: "Dyreterapi",              slug: "dyreterapi" },
+  { label: "Trening som medisin",     slug: "trening-som-medisin" },
 ];
 
 const doors = [
@@ -71,12 +71,13 @@ export function AinaStory() {
               </p>
               <div className="flex flex-wrap gap-2">
                 {specialties.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full border border-border bg-background px-4 py-1.5 text-sm text-ink-muted"
+                  <a
+                    key={s.slug}
+                    href={`/fagfelt/${s.slug}`}
+                    className="rounded-full border border-border bg-background px-4 py-1.5 text-sm text-ink-muted transition-colors hover:border-primary hover:text-primary"
                   >
-                    {s}
-                  </span>
+                    {s.label}
+                  </a>
                 ))}
               </div>
 

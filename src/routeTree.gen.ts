@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FagfeltSlugRouteImport } from './routes/fagfelt/$slug'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicWaitlistRouteImport } from './routes/api/public/waitlist'
@@ -26,6 +27,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FagfeltSlugRoute = FagfeltSlugRouteImport.update({
+  id: '/fagfelt/$slug',
+  path: '/fagfelt/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/fagfelt/$slug': typeof FagfeltSlugRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/fagfelt/$slug': typeof FagfeltSlugRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/fagfelt/$slug': typeof FagfeltSlugRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/email/unsubscribe'
+    | '/fagfelt/$slug'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/email/unsubscribe'
+    | '/fagfelt/$slug'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/email/unsubscribe'
+    | '/fagfelt/$slug'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
+  FagfeltSlugRoute: typeof FagfeltSlugRoute
   ApiPublicWaitlistRoute: typeof ApiPublicWaitlistRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fagfelt/$slug': {
+      id: '/fagfelt/$slug'
+      path: '/fagfelt/$slug'
+      fullPath: '/fagfelt/$slug'
+      preLoaderRoute: typeof FagfeltSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/email/unsubscribe': {
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
+  FagfeltSlugRoute: FagfeltSlugRoute,
   ApiPublicWaitlistRoute: ApiPublicWaitlistRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
