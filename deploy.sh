@@ -21,7 +21,7 @@ if [ -f ".env" ]; then
   RESEND_API_KEY=$(_env RESEND_API_KEY)
   ADMIN_PASSWORD=$(_env ADMIN_PASSWORD)
   ADMIN_SESSION_SECRET=$(_env ADMIN_SESSION_SECRET)
-  OPENROUTER_API_KEY=$(_env OPENROUTER_API_KEY)
+  OPENROUTER_API_KEY=$(_env OPENROUTER_API_KEY || true)
 else
   echo "❌  Fant ingen .env — kjør fra prosjektmappen." && exit 1
 fi
@@ -46,7 +46,7 @@ ssh "$SERVER" bash -s -- \
   VITE_URL="$7" VITE_KEY="$8" VITE_PROJECT="$9"
   SUPABASE_URL="${10}" SUPABASE_SERVICE_ROLE_KEY="${11}"
   RESEND_API_KEY="${12}" ADMIN_PASSWORD="${13}" ADMIN_SESSION_SECRET="${14}"
-  OPENROUTER_API_KEY="${15}"
+  OPENROUTER_API_KEY="${15:-}"
 
   echo "⬇️   Henter kode..."
   if [ -d "$REPO_DIR/.git" ]; then
