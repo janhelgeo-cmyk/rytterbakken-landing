@@ -26,7 +26,7 @@ export function Hero() {
           Et sted der jord, helse og <em className="italic text-primary">læring</em> vokser sammen.
         </h1>
         <p className="reveal mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-ink-muted md:text-xl">
-          Rytterbakken er et fysisk testlaboratorium for regenerativ livs- og næringsutvikling — der vi kobler naturen, kroppen og kunnskapen i ett.
+          Et svar på spørsmålet som er større enn wellness: hvordan lever vi godt i et samfunn som gjør oss syke?
         </p>
         <div className="reveal mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <a

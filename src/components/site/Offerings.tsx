@@ -2,22 +2,22 @@ const offerings = [
   {
     no: "01",
     title: "Workshops",
-    body: "Halvdags- og heldagssamlinger i permakultur, pust og kosthold. Hands-on, konkret, lokalt.",
+    body: "Halvdags- og heldagssamlinger i permakultur, pust og kosthold. Konkret, kroppslig, lokalt.",
   },
   {
     no: "02",
-    title: "​Gårdsopphold",
-    body: "Dype samlinger over 2–4 dager. Integrering, ro og fellesskap på gården.",
+    title: "Gårdsopphold",
+    body: "2–4 dager på gården. Ro, fellesskap og tid til å kjenne etter. Noe du merker lenge etter.",
   },
   {
     no: "03",
     title: "Kurs og fordypning",
-    body: "Digitale og fysiske kursmoduler. Lær i ditt eget tempo med støtte fra Eir, vår digitale veileder.",
+    body: "Digitale og fysiske moduler. Gå din egen vei, med Eir som støtte underveis.",
   },
   {
     no: "04",
     title: "Medlemskap (kommer)",
-    body: "Personlig oppfølging, dashboard og AI-støttet progresjon. Åpner for første kohorte høst 2026.",
+    body: "Personlig oppfølging og tilgang til Eir. Åpner høst 2026 for de første som er inne.",
   },
 ];
 

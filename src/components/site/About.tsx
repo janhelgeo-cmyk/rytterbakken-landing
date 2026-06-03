@@ -11,16 +11,16 @@ export function About() {
           </h2>
           <div className="mt-8 space-y-5 text-[15px] leading-relaxed text-ink-muted">
             <p>
-              Rytterbakken ligger like utenfor Elverum, omkranset av skog og åpne jorder. Aina Mumbi har samlet flere tiår med erfaring fra nervesystem-regulering, pust og regenerativt jordbruk — og bygger nå et sted der disse trådene møtes i praksis.
+              Rytterbakken ligger like utenfor Elverum, omkranset av skog og åpne jorder. Aina Mumbi bygger her et sted der nervesystem-regulering, pust og regenerativt jordbruk møtes — ikke som teori, men i praksis.
             </p>
             <p>
-              Metodikken er enkel, men ikke lett: vi tester, måler og deler. Det som fungerer for kropp og jord blir til kurs, ​gårdsopphold og verktøy du tar med deg hjem.
+              Metodikken er enkel, men ikke lett: vi tester, måler og deler. Det som fungerer for kropp og jord blir til kurs, gårdsopphold og verktøy du tar med deg hjem.
             </p>
           </div>
 
           <figure className="mt-10 rounded-2xl border-l-2 border-primary bg-surface/70 px-7 py-6">
             <blockquote className="font-display text-xl italic leading-snug text-ink md:text-2xl">
-              "Vi bygger et sted der det er mulig å se at det fungerer."
+              "Helse er kroppens naturlige tilstand. Den søker mot helhet — og det går an å ha det bra."
             </blockquote>
             <figcaption className="mt-3 text-xs uppercase tracking-[0.18em] text-earth">
               Aina Mumbi · Grunnlegger

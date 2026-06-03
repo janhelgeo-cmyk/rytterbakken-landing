@@ -4,13 +4,13 @@ export function Eir() {
       <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-20">
         <div className="reveal">
           <p className="eyebrow" style={{ color: "oklch(0.78 0.05 70)" }}>
-            AI som støtter
+            Din guide mellom samlingene
           </p>
           <h2 className="mt-5 font-display text-4xl leading-tight text-background md:text-5xl">
             Eir — din <em className="italic" style={{ color: "oklch(0.7 0.118 45)" }}>personlige</em> veileder
           </h2>
           <p className="mt-8 max-w-xl text-[15px] leading-relaxed" style={{ color: "oklch(0.82 0.022 70)" }}>
-            Eir er ikke en chatbot. Hun er en digital veileder som kjenner din reise hos oss — kursene du har tatt, det du reflekterte over, og hvor du er nå. Tilgjengelig for våre medlemmer.
+            Eir er ikke en chatbot. Hun er en digital veileder som kjenner reisen din — det du har gjort, det du reflekterte over, og hvor du er nå. For de som vil at arbeidet ikke stopper når du drar hjem.
           </p>
           <span className="mt-8 inline-flex items-center rounded-full bg-primary px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-primary-foreground">
             Kommer snart

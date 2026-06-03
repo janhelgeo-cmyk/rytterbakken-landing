@@ -175,7 +175,7 @@ export function Waitlist() {
           Bli en del av <em className="italic text-primary">det første kullet</em>.
         </h2>
         <p className="reveal mx-auto mt-6 max-w-lg text-ink-muted">
-          Vi åpner gradvis. Skriv deg på ventelisten, så hører du fra oss når plasser blir tilgjengelige.
+          Vi åpner gradvis og på ordentlig. Skriv deg på listen — så hører du fra oss når det er klart.
         </p>
 
         {status === "success" ? (

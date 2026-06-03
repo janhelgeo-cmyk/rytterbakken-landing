@@ -2,17 +2,17 @@ const pillars = [
   {
     icon: "🌱",
     title: "Regenerativt jordbruk",
-    body: "Vi dyrker, eksperimenterer og dokumenterer — for å vise at det er mulig å leve og produsere i balanse med naturen.",
+    body: "Vi dyrker, eksperimenterer og dokumenterer — for å vise at det er mulig å leve og produsere uten å ta mer enn naturen gir tilbake.",
   },
   {
     icon: "🫁",
     title: "Helse og regulering",
-    body: "Pust, bevegelse og nervesystem-regulering. Vi tilbyr deg verktøy du kan bruke resten av livet.",
+    body: "Pust, bevegelse og nervesystemet. Ikke som kurs — som verktøy du tar med deg hjem og bruker resten av livet.",
   },
   {
     icon: "📚",
     title: "Læring og fellesskap",
-    body: "Workshops, ​gårdsopphold og fordypningskurs. Kunnskap som gjøres praktisk, lokalt og tilgjengelig — og som fortsetter mellom samlingene.",
+    body: "Workshops, gårdsopphold og fordypning. Kunnskap som gjøres kroppslig og praktisk — og som fortsetter mellom samlingene.",
   },
 ];
 

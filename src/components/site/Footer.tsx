@@ -12,6 +12,7 @@ export function Footer() {
           <a href="#hva" className="hover:text-ink">Hva vi er</a>
           <a href="#tilbud" className="hover:text-ink">Tilbud</a>
           <a href="#om" className="hover:text-ink">Om oss</a>
+          <a href="#aina" className="hover:text-ink">Grunnleggeren</a>
           <a href="mailto:post@mindmatter.no" className="hover:text-ink">Kontakt</a>
         </div>
         <div className="text-sm text-ink-muted">
