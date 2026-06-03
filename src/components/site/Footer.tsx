@@ -9,10 +9,10 @@ export function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-muted">
-          <a href="#hva" className="hover:text-ink">Hva vi er</a>
-          <a href="#tilbud" className="hover:text-ink">Tilbud</a>
-          <a href="#om" className="hover:text-ink">Om oss</a>
-          <a href="#aina" className="hover:text-ink">Grunnleggeren</a>
+          <a href="/#hva" className="hover:text-ink">Hva vi er</a>
+          <a href="/#tilbud" className="hover:text-ink">Tilbud</a>
+          <a href="/#om" className="hover:text-ink">Om oss</a>
+          <a href="/#aina" className="hover:text-ink">Grunnleggeren</a>
           <a href="mailto:post@mindmatter.no" className="hover:text-ink">Kontakt</a>
         </div>
         <div className="text-sm text-ink-muted">
