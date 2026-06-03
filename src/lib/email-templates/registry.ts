@@ -11,8 +11,10 @@ export interface TemplateEntry {
 
 import { template as waitlistConfirmation } from './waitlist-confirmation'
 import { template as waitlistVerify } from './waitlist-verify'
+import { template as memberLogin } from './member-login'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'waitlist-confirmation': waitlistConfirmation,
   'waitlist-verify': waitlistVerify,
+  'member-login': memberLogin,
 }

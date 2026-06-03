@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client"; // brukes til redirect-sjekk ved oppstart
 
 export const Route = createFileRoute("/logg-inn")({
   head: () => ({
@@ -31,21 +31,23 @@ function LoggInn() {
     setStatus("loading");
     setMessage("");
 
-    const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
+    try {
+      const res = await fetch("/api/auth/send-magic-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      });
+      const data = await res.json().catch(() => ({}));
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email.trim().toLowerCase(),
-      options: {
-        emailRedirectTo: `${siteUrl}/auth/callback`,
-        shouldCreateUser: true,
-      },
-    });
-
-    if (error) {
+      if (!res.ok) {
+        setStatus("error");
+        setMessage(data?.error ?? "Noe gikk galt. Prøv igjen om litt.");
+      } else {
+        setStatus("sent");
+      }
+    } catch {
       setStatus("error");
-      setMessage("Noe gikk galt. Prøv igjen om litt.");
-    } else {
-      setStatus("sent");
+      setMessage("Ingen kontakt med serveren. Sjekk nettforbindelsen.");
     }
   }
 

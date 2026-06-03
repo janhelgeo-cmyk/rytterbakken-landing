@@ -23,6 +23,7 @@ import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicWaitlistRouteImport } from './routes/api/public/waitlist'
 import { Route as ApiMemberEirRouteImport } from './routes/api/member/eir'
+import { Route as ApiAuthSendMagicLinkRouteImport } from './routes/api/auth/send-magic-link'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -98,6 +99,11 @@ const ApiMemberEirRoute = ApiMemberEirRouteImport.update({
   path: '/api/member/eir',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSendMagicLinkRoute = ApiAuthSendMagicLinkRouteImport.update({
+  id: '/api/auth/send-magic-link',
+  path: '/api/auth/send-magic-link',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
     id: '/lovable/email/transactional/send',
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/min-side/eir': typeof MinSideEirRoute
   '/min-side/profil': typeof MinSideProfilRoute
   '/min-side/': typeof MinSideIndexRoute
+  '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/min-side/aktiviteter': typeof MinSideAktiviteterRoute
   '/min-side/eir': typeof MinSideEirRoute
   '/min-side/profil': typeof MinSideProfilRoute
+  '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/min-side/eir': typeof MinSideEirRoute
   '/min-side/profil': typeof MinSideProfilRoute
   '/min-side/': typeof MinSideIndexRoute
+  '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/min-side/eir'
     | '/min-side/profil'
     | '/min-side/'
+    | '/api/auth/send-magic-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/min-side/aktiviteter'
     | '/min-side/eir'
     | '/min-side/profil'
+    | '/api/auth/send-magic-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/min-side/eir'
     | '/min-side/profil'
     | '/min-side/'
+    | '/api/auth/send-magic-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
@@ -256,6 +268,7 @@ export interface RootRouteChildren {
   MinSideEirRoute: typeof MinSideEirRoute
   MinSideProfilRoute: typeof MinSideProfilRoute
   MinSideIndexRoute: typeof MinSideIndexRoute
+  ApiAuthSendMagicLinkRoute: typeof ApiAuthSendMagicLinkRoute
   ApiMemberEirRoute: typeof ApiMemberEirRoute
   ApiPublicWaitlistRoute: typeof ApiPublicWaitlistRouteWithChildren
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMemberEirRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/send-magic-link': {
+      id: '/api/auth/send-magic-link'
+      path: '/api/auth/send-magic-link'
+      fullPath: '/api/auth/send-magic-link'
+      preLoaderRoute: typeof ApiAuthSendMagicLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
       path: '/lovable/email/transactional/send'
@@ -418,6 +438,7 @@ const rootRouteChildren: RootRouteChildren = {
   MinSideEirRoute: MinSideEirRoute,
   MinSideProfilRoute: MinSideProfilRoute,
   MinSideIndexRoute: MinSideIndexRoute,
+  ApiAuthSendMagicLinkRoute: ApiAuthSendMagicLinkRoute,
   ApiMemberEirRoute: ApiMemberEirRoute,
   ApiPublicWaitlistRoute: ApiPublicWaitlistRouteWithChildren,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
