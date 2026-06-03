@@ -5,7 +5,7 @@ import * as React from 'react'
 import { z } from 'zod'
 import { TEMPLATES } from '@/lib/email-templates/registry'
 
-const SITE_NAME = 'Mindmatter'
+const SITE_NAME = 'Rytterbakken'
 const FROM_DOMAIN = 'mindmatter.no'
 
 const bodySchema = z.object({

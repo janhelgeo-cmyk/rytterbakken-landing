@@ -2,15 +2,13 @@ import {
   Body,
   Container,
   Head,
-  Heading,
+  Hr,
   Html,
   Preview,
   Section,
   Text,
 } from '@react-email/components'
 import type { TemplateEntry } from './registry'
-
-const SITE_NAME = 'Mindmatter'
 
 interface WaitlistConfirmationProps {
   name?: string
@@ -23,30 +21,45 @@ const WaitlistConfirmationEmail = ({
 }: WaitlistConfirmationProps) => (
   <Html lang="no" dir="ltr">
     <Head />
-    <Preview>Takk for at du meldte deg på ventelisten til {SITE_NAME}</Preview>
+    <Preview>Du er på listen. Vi tar kontakt når det er klart.</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>
-          {name ? `Takk, ${name}!` : 'Takk for din interesse!'}
-        </Heading>
+
+        {/* Wordmark */}
+        <Text style={wordmark}>Rytterbakken</Text>
+
+        <Hr style={divider} />
+
+        {/* Greeting */}
+        <Text style={heading}>
+          {name ? `Hei, ${name}.` : 'Hei.'}
+        </Text>
+
         <Text style={text}>
-          Vi har registrert deg på ventelisten til {SITE_NAME}. Vi tar
-          kontakt så snart en plass åpner seg.
+          Du er på ventelisten. Vi åpner gradvis og på ordentlig — og du hører
+          fra oss når det er tid for deg.
         </Text>
 
         {reason ? (
           <Section style={card}>
-            <Text style={cardLabel}>Din begrunnelse</Text>
+            <Text style={cardLabel}>Du skrev</Text>
             <Text style={cardBody}>{reason}</Text>
           </Section>
         ) : null}
 
         <Text style={text}>
-          Har du spørsmål i mellomtiden, er det bare å svare på denne
-          e-posten.
+          I mellomtiden: nettsiden vår har mer om hva vi jobber med og hvem vi
+          er. Har du spørsmål, svar gjerne på denne e-posten.
         </Text>
 
-        <Text style={footer}>Vennlig hilsen,<br />{SITE_NAME}</Text>
+        <Hr style={divider} />
+
+        <Text style={signoff}>
+          Aina og teamet på Rytterbakken
+          <br />
+          <span style={location}>Elverum, Norge · post@mindmatter.no</span>
+        </Text>
+
       </Container>
     </Body>
   </Html>
@@ -54,54 +67,92 @@ const WaitlistConfirmationEmail = ({
 
 export const template = {
   component: WaitlistConfirmationEmail,
-  subject: 'Takk for at du meldte deg på ventelisten',
+  subject: 'Du er på listen.',
   displayName: 'Venteliste-bekreftelse',
   previewData: {
     name: 'Kari Nordmann',
-    reason: 'Jeg ønsker å lære mer om hvordan dette kan hjelpe meg.',
+    reason: 'Jeg har lenge vært nysgjerrig på sammenhengen mellom nervesystem og jord.',
   },
 } satisfies TemplateEntry
 
+// ── Styles ────────────────────────────────────────────────────────────────────
+
 const main = {
-  backgroundColor: '#ffffff',
-  fontFamily:
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  backgroundColor: '#F4EDE2',
+  fontFamily: 'Georgia, "Times New Roman", serif',
 }
-const container = { padding: '32px 28px', maxWidth: '560px' }
-const h1 = {
-  fontSize: '24px',
-  fontWeight: 600,
-  color: '#1a1a1a',
+
+const container = {
+  padding: '48px 40px 40px',
+  maxWidth: '560px',
+  margin: '0 auto',
+}
+
+const wordmark = {
+  fontSize: '22px',
+  fontWeight: '500',
+  color: '#2A2520',
+  letterSpacing: '-0.01em',
+  margin: '0 0 24px',
+}
+
+const divider = {
+  borderColor: '#D9C9AE',
+  margin: '0 0 28px',
+}
+
+const heading = {
+  fontSize: '28px',
+  fontWeight: '400',
+  color: '#2A2520',
+  lineHeight: '1.2',
   margin: '0 0 20px',
+  fontStyle: 'italic',
 }
+
 const text = {
-  fontSize: '15px',
-  color: '#3f3f46',
-  lineHeight: '1.6',
-  margin: '0 0 18px',
+  fontSize: '16px',
+  color: '#5C5249',
+  lineHeight: '1.65',
+  margin: '0 0 20px',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 }
+
 const card = {
-  backgroundColor: '#f6f3ee',
-  borderRadius: '12px',
-  padding: '18px 20px',
-  margin: '8px 0 22px',
+  borderLeft: '2px solid #B5663D',
+  paddingLeft: '20px',
+  margin: '4px 0 24px',
 }
+
 const cardLabel = {
-  fontSize: '12px',
+  fontSize: '11px',
   textTransform: 'uppercase' as const,
-  letterSpacing: '0.08em',
-  color: '#71717a',
-  margin: '0 0 6px',
+  letterSpacing: '0.15em',
+  color: '#B5663D',
+  margin: '0 0 8px',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  fontWeight: '500',
 }
+
 const cardBody = {
   fontSize: '15px',
-  color: '#1a1a1a',
-  lineHeight: '1.55',
+  color: '#2A2520',
+  lineHeight: '1.6',
   margin: 0,
+  fontStyle: 'italic',
+  fontFamily: 'Georgia, "Times New Roman", serif',
   whiteSpace: 'pre-wrap' as const,
 }
-const footer = {
+
+const signoff = {
+  fontSize: '15px',
+  color: '#2A2520',
+  lineHeight: '1.6',
+  margin: '24px 0 0',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+}
+
+const location = {
   fontSize: '13px',
-  color: '#71717a',
-  margin: '28px 0 0',
+  color: '#5C5249',
 }
