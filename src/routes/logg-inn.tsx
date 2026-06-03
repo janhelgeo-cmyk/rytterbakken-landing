@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Nav } from "@/components/site/Nav";
+import { Footer } from "@/components/site/Footer";
+import heroImg from "@/assets/hero-farm.jpg";
 
 export const Route = createFileRoute("/logg-inn")({
   head: () => ({ meta: [{ title: "Logg inn — Rytterbakken" }, { name: "robots", content: "noindex" }] }),
@@ -84,17 +87,32 @@ function LoggInn() {
 
 export function AuthShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6">
-      <div className="w-full max-w-sm">
-        <a href="/" className="mb-10 block font-display text-2xl tracking-tight text-ink"
-          style={{ fontFamily: "'Fraunces', serif" }}>
-          Rytterbakken
-        </a>
-        {children}
-        <p className="mt-8 text-center text-xs text-ink-muted/60">
-          <a href="/" className="hover:text-ink-muted">← Tilbake til forsiden</a>
-        </p>
+    <div className="flex min-h-screen flex-col bg-background">
+      <Nav />
+
+      {/* Hero background */}
+      <div className="relative flex flex-1 items-center justify-center px-6 py-24">
+        <div className="absolute inset-0 -z-10">
+          <img
+            src={heroImg}
+            alt=""
+            className="h-full w-full object-cover"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(244,237,226,0.7) 0%, rgba(244,237,226,0.55) 40%, rgba(244,237,226,0.85) 80%, var(--background) 100%)",
+            }}
+          />
+        </div>
+
+        <div className="relative w-full max-w-sm">
+          {children}
+        </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
