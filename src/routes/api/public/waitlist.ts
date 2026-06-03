@@ -118,6 +118,7 @@ export const Route = createFileRoute('/api/public/waitlist')({
           const resend = new Resend(resendApiKey)
           await resend.emails.send({
             from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+            reply_to: `post@${FROM_DOMAIN}`,
             to: [email],
             subject,
             html,

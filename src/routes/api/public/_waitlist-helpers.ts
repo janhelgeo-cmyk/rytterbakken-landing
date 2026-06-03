@@ -88,6 +88,7 @@ export async function enqueueConfirmation(args: {
       message_id: messageId,
       to: email,
       from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+      reply_to: `post@${FROM_DOMAIN}`,
       subject,
       html,
       text,
