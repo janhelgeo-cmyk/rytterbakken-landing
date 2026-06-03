@@ -4,6 +4,7 @@ const links = [
   { href: "#hva", label: "Hva vi er" },
   { href: "#tilbud", label: "Tilbud" },
   { href: "#om", label: "Om oss" },
+  { href: "#aina", label: "Grunnleggeren" },
 ];
 
 export function Nav() {

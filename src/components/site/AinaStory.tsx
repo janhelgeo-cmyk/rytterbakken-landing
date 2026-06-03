@@ -36,7 +36,7 @@ export function AinaStory() {
   return (
     <>
       {/* ── Historien ─────────────────────────────────────────────────── */}
-      <section className="relative border-t border-border/60 bg-surface py-24 md:py-32">
+      <section id="aina" className="relative border-t border-border/60 bg-surface py-24 md:py-32">
         <div className="mx-auto max-w-6xl px-6">
 
           <p className="eyebrow reveal">Grunnleggeren</p>
