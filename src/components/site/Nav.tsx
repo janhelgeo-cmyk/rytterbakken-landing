@@ -109,6 +109,15 @@ export function Nav() {
                 {l.label}
               </a>
             ))}
+            <div className="mt-3 border-t border-border/60 pt-3">
+              <a
+                href="/logg-inn"
+                onClick={() => setOpen(false)}
+                className="py-3 text-base text-ink-muted transition-colors hover:text-ink block"
+              >
+                Logg inn
+              </a>
+            </div>
           </div>
         </div>
       </header>
