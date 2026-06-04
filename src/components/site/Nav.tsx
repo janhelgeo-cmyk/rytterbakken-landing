@@ -30,7 +30,9 @@ export function Nav() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled || open
+          open
+            ? "bg-background border-b border-border/60"
+            : scrolled
             ? "bg-background/95 backdrop-blur-md border-b border-border/60"
             : "bg-transparent"
         }`}
@@ -94,8 +96,8 @@ export function Nav() {
 
         {/* Mobil-dropdown */}
         <div
-          className={`overflow-hidden transition-all duration-300 md:hidden ${
-            open ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+          className={`overflow-hidden transition-all duration-300 md:hidden bg-background ${
+            open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <div className="flex flex-col border-t border-border/60 px-6 py-4">
