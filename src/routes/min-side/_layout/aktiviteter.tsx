@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/min-side/aktiviteter")({
+export const Route = createFileRoute("/min-side/_layout/aktiviteter")({
   head: () => ({ meta: [{ title: "Aktiviteter — Min side" }] }),
   component: Aktiviteter,
 });

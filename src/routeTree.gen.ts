@@ -15,14 +15,14 @@ import { Route as LoggInnRouteImport } from './routes/logg-inn'
 import { Route as GlemtPassordRouteImport } from './routes/glemt-passord'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as MinSideIndexRouteImport } from './routes/min-side/index'
-import { Route as MinSideProfilRouteImport } from './routes/min-side/profil'
-import { Route as MinSideEirRouteImport } from './routes/min-side/eir'
-import { Route as MinSideAktiviteterRouteImport } from './routes/min-side/aktiviteter'
-import { Route as MinSideLayoutRouteImport } from './routes/min-side/_layout'
 import { Route as FagfeltSlugRouteImport } from './routes/fagfelt/$slug'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as MinSideLayoutRouteRouteImport } from './routes/min-side/_layout/route'
+import { Route as MinSideLayoutIndexRouteImport } from './routes/min-side/_layout/index'
+import { Route as MinSideLayoutProfilRouteImport } from './routes/min-side/_layout/profil'
+import { Route as MinSideLayoutEirRouteImport } from './routes/min-side/_layout/eir'
+import { Route as MinSideLayoutAktiviteterRouteImport } from './routes/min-side/_layout/aktiviteter'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicWaitlistRouteImport } from './routes/api/public/waitlist'
 import { Route as ApiMemberEirRouteImport } from './routes/api/member/eir'
@@ -64,31 +64,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MinSideIndexRoute = MinSideIndexRouteImport.update({
-  id: '/min-side/',
-  path: '/min-side/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MinSideProfilRoute = MinSideProfilRouteImport.update({
-  id: '/min-side/profil',
-  path: '/min-side/profil',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MinSideEirRoute = MinSideEirRouteImport.update({
-  id: '/min-side/eir',
-  path: '/min-side/eir',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MinSideAktiviteterRoute = MinSideAktiviteterRouteImport.update({
-  id: '/min-side/aktiviteter',
-  path: '/min-side/aktiviteter',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MinSideLayoutRoute = MinSideLayoutRouteImport.update({
-  id: '/min-side/_layout',
-  path: '/min-side',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FagfeltSlugRoute = FagfeltSlugRouteImport.update({
   id: '/fagfelt/$slug',
   path: '/fagfelt/$slug',
@@ -104,6 +79,32 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MinSideLayoutRouteRoute = MinSideLayoutRouteRouteImport.update({
+  id: '/min-side/_layout',
+  path: '/min-side',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinSideLayoutIndexRoute = MinSideLayoutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MinSideLayoutRouteRoute,
+} as any)
+const MinSideLayoutProfilRoute = MinSideLayoutProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => MinSideLayoutRouteRoute,
+} as any)
+const MinSideLayoutEirRoute = MinSideLayoutEirRouteImport.update({
+  id: '/eir',
+  path: '/eir',
+  getParentRoute: () => MinSideLayoutRouteRoute,
+} as any)
+const MinSideLayoutAktiviteterRoute =
+  MinSideLayoutAktiviteterRouteImport.update({
+    id: '/aktiviteter',
+    path: '/aktiviteter',
+    getParentRoute: () => MinSideLayoutRouteRoute,
+  } as any)
 const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   id: '/lovable/email/suppression',
   path: '/lovable/email/suppression',
@@ -165,20 +166,20 @@ export interface FileRoutesByFullPath {
   '/logg-inn': typeof LoggInnRoute
   '/registrer': typeof RegistrerRoute
   '/sett-passord': typeof SettPassordRoute
+  '/min-side': typeof MinSideLayoutRouteRouteWithChildren
   '/auth/callback': typeof AuthCallbackRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
-  '/min-side': typeof MinSideLayoutRoute
-  '/min-side/aktiviteter': typeof MinSideAktiviteterRoute
-  '/min-side/eir': typeof MinSideEirRoute
-  '/min-side/profil': typeof MinSideProfilRoute
-  '/min-side/': typeof MinSideIndexRoute
   '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
   '/api/auth/send-reset-link': typeof ApiAuthSendResetLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/min-side/aktiviteter': typeof MinSideLayoutAktiviteterRoute
+  '/min-side/eir': typeof MinSideLayoutEirRoute
+  '/min-side/profil': typeof MinSideLayoutProfilRoute
+  '/min-side/': typeof MinSideLayoutIndexRoute
   '/api/public/waitlist/verify': typeof ApiPublicWaitlistVerifyRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -194,16 +195,16 @@ export interface FileRoutesByTo {
   '/auth/callback': typeof AuthCallbackRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
-  '/min-side': typeof MinSideIndexRoute
-  '/min-side/aktiviteter': typeof MinSideAktiviteterRoute
-  '/min-side/eir': typeof MinSideEirRoute
-  '/min-side/profil': typeof MinSideProfilRoute
   '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
   '/api/auth/send-reset-link': typeof ApiAuthSendResetLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/min-side/aktiviteter': typeof MinSideLayoutAktiviteterRoute
+  '/min-side/eir': typeof MinSideLayoutEirRoute
+  '/min-side/profil': typeof MinSideLayoutProfilRoute
+  '/min-side': typeof MinSideLayoutIndexRoute
   '/api/public/waitlist/verify': typeof ApiPublicWaitlistVerifyRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -217,20 +218,20 @@ export interface FileRoutesById {
   '/logg-inn': typeof LoggInnRoute
   '/registrer': typeof RegistrerRoute
   '/sett-passord': typeof SettPassordRoute
+  '/min-side/_layout': typeof MinSideLayoutRouteRouteWithChildren
   '/auth/callback': typeof AuthCallbackRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/fagfelt/$slug': typeof FagfeltSlugRoute
-  '/min-side/_layout': typeof MinSideLayoutRoute
-  '/min-side/aktiviteter': typeof MinSideAktiviteterRoute
-  '/min-side/eir': typeof MinSideEirRoute
-  '/min-side/profil': typeof MinSideProfilRoute
-  '/min-side/': typeof MinSideIndexRoute
   '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/auth/send-magic-link': typeof ApiAuthSendMagicLinkRoute
   '/api/auth/send-reset-link': typeof ApiAuthSendResetLinkRoute
   '/api/member/eir': typeof ApiMemberEirRoute
   '/api/public/waitlist': typeof ApiPublicWaitlistRouteWithChildren
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/min-side/_layout/aktiviteter': typeof MinSideLayoutAktiviteterRoute
+  '/min-side/_layout/eir': typeof MinSideLayoutEirRoute
+  '/min-side/_layout/profil': typeof MinSideLayoutProfilRoute
+  '/min-side/_layout/': typeof MinSideLayoutIndexRoute
   '/api/public/waitlist/verify': typeof ApiPublicWaitlistVerifyRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -245,20 +246,20 @@ export interface FileRouteTypes {
     | '/logg-inn'
     | '/registrer'
     | '/sett-passord'
+    | '/min-side'
     | '/auth/callback'
     | '/email/unsubscribe'
     | '/fagfelt/$slug'
-    | '/min-side'
-    | '/min-side/aktiviteter'
-    | '/min-side/eir'
-    | '/min-side/profil'
-    | '/min-side/'
     | '/api/auth/register'
     | '/api/auth/send-magic-link'
     | '/api/auth/send-reset-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
+    | '/min-side/aktiviteter'
+    | '/min-side/eir'
+    | '/min-side/profil'
+    | '/min-side/'
     | '/api/public/waitlist/verify'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -274,16 +275,16 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/email/unsubscribe'
     | '/fagfelt/$slug'
-    | '/min-side'
-    | '/min-side/aktiviteter'
-    | '/min-side/eir'
-    | '/min-side/profil'
     | '/api/auth/register'
     | '/api/auth/send-magic-link'
     | '/api/auth/send-reset-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
+    | '/min-side/aktiviteter'
+    | '/min-side/eir'
+    | '/min-side/profil'
+    | '/min-side'
     | '/api/public/waitlist/verify'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -296,20 +297,20 @@ export interface FileRouteTypes {
     | '/logg-inn'
     | '/registrer'
     | '/sett-passord'
+    | '/min-side/_layout'
     | '/auth/callback'
     | '/email/unsubscribe'
     | '/fagfelt/$slug'
-    | '/min-side/_layout'
-    | '/min-side/aktiviteter'
-    | '/min-side/eir'
-    | '/min-side/profil'
-    | '/min-side/'
     | '/api/auth/register'
     | '/api/auth/send-magic-link'
     | '/api/auth/send-reset-link'
     | '/api/member/eir'
     | '/api/public/waitlist'
     | '/lovable/email/suppression'
+    | '/min-side/_layout/aktiviteter'
+    | '/min-side/_layout/eir'
+    | '/min-side/_layout/profil'
+    | '/min-side/_layout/'
     | '/api/public/waitlist/verify'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -323,14 +324,10 @@ export interface RootRouteChildren {
   LoggInnRoute: typeof LoggInnRoute
   RegistrerRoute: typeof RegistrerRoute
   SettPassordRoute: typeof SettPassordRoute
+  MinSideLayoutRouteRoute: typeof MinSideLayoutRouteRouteWithChildren
   AuthCallbackRoute: typeof AuthCallbackRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   FagfeltSlugRoute: typeof FagfeltSlugRoute
-  MinSideLayoutRoute: typeof MinSideLayoutRoute
-  MinSideAktiviteterRoute: typeof MinSideAktiviteterRoute
-  MinSideEirRoute: typeof MinSideEirRoute
-  MinSideProfilRoute: typeof MinSideProfilRoute
-  MinSideIndexRoute: typeof MinSideIndexRoute
   ApiAuthRegisterRoute: typeof ApiAuthRegisterRoute
   ApiAuthSendMagicLinkRoute: typeof ApiAuthSendMagicLinkRoute
   ApiAuthSendResetLinkRoute: typeof ApiAuthSendResetLinkRoute
@@ -386,41 +383,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/min-side/': {
-      id: '/min-side/'
-      path: '/min-side'
-      fullPath: '/min-side/'
-      preLoaderRoute: typeof MinSideIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/min-side/profil': {
-      id: '/min-side/profil'
-      path: '/min-side/profil'
-      fullPath: '/min-side/profil'
-      preLoaderRoute: typeof MinSideProfilRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/min-side/eir': {
-      id: '/min-side/eir'
-      path: '/min-side/eir'
-      fullPath: '/min-side/eir'
-      preLoaderRoute: typeof MinSideEirRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/min-side/aktiviteter': {
-      id: '/min-side/aktiviteter'
-      path: '/min-side/aktiviteter'
-      fullPath: '/min-side/aktiviteter'
-      preLoaderRoute: typeof MinSideAktiviteterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/min-side/_layout': {
-      id: '/min-side/_layout'
-      path: '/min-side'
-      fullPath: '/min-side'
-      preLoaderRoute: typeof MinSideLayoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/fagfelt/$slug': {
       id: '/fagfelt/$slug'
       path: '/fagfelt/$slug'
@@ -441,6 +403,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/callback'
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/min-side/_layout': {
+      id: '/min-side/_layout'
+      path: '/min-side'
+      fullPath: '/min-side'
+      preLoaderRoute: typeof MinSideLayoutRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/min-side/_layout/': {
+      id: '/min-side/_layout/'
+      path: '/'
+      fullPath: '/min-side/'
+      preLoaderRoute: typeof MinSideLayoutIndexRouteImport
+      parentRoute: typeof MinSideLayoutRouteRoute
+    }
+    '/min-side/_layout/profil': {
+      id: '/min-side/_layout/profil'
+      path: '/profil'
+      fullPath: '/min-side/profil'
+      preLoaderRoute: typeof MinSideLayoutProfilRouteImport
+      parentRoute: typeof MinSideLayoutRouteRoute
+    }
+    '/min-side/_layout/eir': {
+      id: '/min-side/_layout/eir'
+      path: '/eir'
+      fullPath: '/min-side/eir'
+      preLoaderRoute: typeof MinSideLayoutEirRouteImport
+      parentRoute: typeof MinSideLayoutRouteRoute
+    }
+    '/min-side/_layout/aktiviteter': {
+      id: '/min-side/_layout/aktiviteter'
+      path: '/aktiviteter'
+      fullPath: '/min-side/aktiviteter'
+      preLoaderRoute: typeof MinSideLayoutAktiviteterRouteImport
+      parentRoute: typeof MinSideLayoutRouteRoute
     }
     '/lovable/email/suppression': {
       id: '/lovable/email/suppression'
@@ -515,6 +512,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface MinSideLayoutRouteRouteChildren {
+  MinSideLayoutAktiviteterRoute: typeof MinSideLayoutAktiviteterRoute
+  MinSideLayoutEirRoute: typeof MinSideLayoutEirRoute
+  MinSideLayoutProfilRoute: typeof MinSideLayoutProfilRoute
+  MinSideLayoutIndexRoute: typeof MinSideLayoutIndexRoute
+}
+
+const MinSideLayoutRouteRouteChildren: MinSideLayoutRouteRouteChildren = {
+  MinSideLayoutAktiviteterRoute: MinSideLayoutAktiviteterRoute,
+  MinSideLayoutEirRoute: MinSideLayoutEirRoute,
+  MinSideLayoutProfilRoute: MinSideLayoutProfilRoute,
+  MinSideLayoutIndexRoute: MinSideLayoutIndexRoute,
+}
+
+const MinSideLayoutRouteRouteWithChildren =
+  MinSideLayoutRouteRoute._addFileChildren(MinSideLayoutRouteRouteChildren)
+
 interface ApiPublicWaitlistRouteChildren {
   ApiPublicWaitlistVerifyRoute: typeof ApiPublicWaitlistVerifyRoute
 }
@@ -533,14 +547,10 @@ const rootRouteChildren: RootRouteChildren = {
   LoggInnRoute: LoggInnRoute,
   RegistrerRoute: RegistrerRoute,
   SettPassordRoute: SettPassordRoute,
+  MinSideLayoutRouteRoute: MinSideLayoutRouteRouteWithChildren,
   AuthCallbackRoute: AuthCallbackRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   FagfeltSlugRoute: FagfeltSlugRoute,
-  MinSideLayoutRoute: MinSideLayoutRoute,
-  MinSideAktiviteterRoute: MinSideAktiviteterRoute,
-  MinSideEirRoute: MinSideEirRoute,
-  MinSideProfilRoute: MinSideProfilRoute,
-  MinSideIndexRoute: MinSideIndexRoute,
   ApiAuthRegisterRoute: ApiAuthRegisterRoute,
   ApiAuthSendMagicLinkRoute: ApiAuthSendMagicLinkRoute,
   ApiAuthSendResetLinkRoute: ApiAuthSendResetLinkRoute,

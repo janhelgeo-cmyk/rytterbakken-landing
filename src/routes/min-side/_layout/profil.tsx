@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/min-side/profil")({
+export const Route = createFileRoute("/min-side/_layout/profil")({
   head: () => ({ meta: [{ title: "Profil — Min side" }] }),
   component: Profil,
 });
